@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #b3f579;
+            font-family: Arial, sans-serif;
+        }
+        button {
+            width: 100px;
+            padding: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            background-color: #007BFF; 
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            align-self: center; 
+        }
+        .heading {
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .outer {
+            background: rgb(136, 237, 227);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 300px;
+        }
+        .outer div {
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+        }
+        .outer a {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .outer input, .outer select {
+            padding: 8px;
+            font-size: 16px;
+        }
+        #result {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="heading">Currency Converter</div>
+    <div class="outer">
+        <div>
+            <a>Enter the amount</a>
+            <input type="text" id="amount" placeholder="Amount in Rs">
+        </div>
+        <div>
+            <a>Select the currency type</a>
+            <select id="currency">
+                <option value="usd">US Dollars</option>
+                <option value="gbp">Pounds</option>
+                <option value="eur">Euros</option>
+                <option value="dinar">Dinar</option>
+                <option value="yen">Yen</option>
+            </select>
+        </div>
+        <div>
+            <a>Converted amount</a>
+            <input type="text" id="convertedAmount" readonly>
+        </div>
+        <div>
+            <button onclick="convertCurrency()">Convert</button>
+        </div>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const exchangeRates = {
+            usd: 0.012,
+            gbp: 0.0094,
+            eur: 0.011,
+            dinar: 0.0037,
+            yen: 1.76
+        };
+
+        function convertCurrency() {
+           
+            const amount = parseFloat(document.getElementById('amount').value);
+            const currency = document.getElementById('currency').value;
+            
+        
+            if (isNaN(amount) || amount <= 0) {
+                document.getElementById('result').textContent = 'Please enter a valid amount.';
+                return;
+            }
+
+            const rate = exchangeRates[currency];
+            if (!rate) {
+                document.getElementById('result').textContent = 'Invalid currency selected.';
+                return;
+            }
+            const convertedAmount = amount * rate;
+            document.getElementById('convertedAmount').value = convertedAmount.toFixed(2);
+            document.getElementById('result').textContent = `Converted amount: ${convertedAmount.toFixed(2)} ${currency.toUpperCase()}`;
+        }
+    </script>
+</body>
+</html>
